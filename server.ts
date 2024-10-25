@@ -8,7 +8,6 @@ await dbConnect()
  const port = envConfig.port || 4000
   app.listen(3000, ()=>{
     console.log(`Server has started at port ${port}`);
-
   })
 }
 
