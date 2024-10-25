@@ -9,12 +9,12 @@ class Todo{
     constructor(){
         this.io.on("connection", (socket:Socket)=>{
             console.log("New Client Connected !");
-            socket.on("addTodo", (data)=>this.handleAddTodo)
+            socket.on("addTodo", (data)=>this.handleAddTodo(socket, data))
         })
     }
 
     private async handleAddTodo(socket:Socket, data:any){
-        const { task, deadline, status } = data
+        const {task,deadline,status} = data
         const todo = await todoModel.create({
             task,
             deadline,
