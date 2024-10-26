@@ -14,16 +14,24 @@ class Todo{
     }
 
     private async handleAddTodo(socket:Socket, data:any){
+      try {
         const {task,deadline,status} = data
-        const todo = await todoModel.create({
+        await todoModel.create({
             task,
             deadline,
             status
         })
-        socket.emit("todo_response", {
+        const todos = await todoModel.find()
+        socket.emit("todos_updated", {
             status : "success",
-            data : todo
+            data : todos
         })
+      } catch (error) {
+        socket.emit("todo_response",{
+            status : "error",
+            error
+        })
+      }
     }
 }
 
